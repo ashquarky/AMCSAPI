@@ -1,3 +1,5 @@
+All modified MCC code (McTcpClient etc) and the dll packaged with some releases is under [CDDL-1.0](http://opensource.org/licenses/CDDL-1.0).
+
 Don't Be A Jerk v2 (Modified slightly from [original](https://raw.githubusercontent.com/jakimfett/DBaJ/master/LICENSE.md))
 
 This computer software code ("the code") is ©2015 QuarkTheAwesome ("the author") all rights reserved, and is licensed for use and redistribution under the “Don’t Be a Jerk v2” non-commercial care-free license. 
