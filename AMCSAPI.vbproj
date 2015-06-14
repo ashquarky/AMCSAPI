@@ -47,12 +47,14 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MCC">
-      <HintPath>.\MCC.dll</HintPath>
+    <Reference Include="MinecraftClient">
+      <HintPath>.\MinecraftClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\LoginFailedException.vb" />
+    <Compile Include="Exceptions\UnsupportedVersionException.vb" />
     <Compile Include="MCCWrapppers\MCCWrapper.vb" />
     <Compile Include="MCCWrapppers\McTcpClient.vb" />
     <Compile Include="MiscStructures\ChatReceivedEventArgs.vb" />
@@ -92,9 +94,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

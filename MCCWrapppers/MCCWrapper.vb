@@ -19,7 +19,7 @@ Namespace MCCWrappers
 
         Event textReceived(args As EventArgs.ChatReceivedEventArgs)
 
-        Friend Function init(username As String, password As String, ip As String, port As UShort)
+        Friend Sub init(username As String, password As String, ip As String, port As UShort)
             Dim result As ProtocolHandler.LoginResult
             Settings.Login = username
             Settings.Password = password
@@ -42,21 +42,32 @@ Namespace MCCWrappers
                 ''TODO: in the original class, this was only if set to Auto version detect.
                 If ProtocolHandler.GetServerInfo(Settings.ServerIP, Settings.ServerPort, protocolVersion) = False Then
                     ''Failed to ping IP...
-                    Throw New System.Exception("Couldn't ping IP")
-
+                    Dim ex As New System.Runtime.Remoting.ServerException("Couldn't reach Minecraft server. See Data for details.")
+                    ex.Data("ServerIP") = Settings.ServerIP
+                    ex.Data("ServerPort") = Settings.ServerPort
+                    ex.Data("protocolVersion") = protocolVersion
+                    Throw ex
                 End If
                 If protocolVersion <> 0 Then
                     Try
                         client = New AMCSAPI.MCCWrappers.McTcpClient(Settings.Username, UUID, sessionID, protocolVersion, Settings.ServerIP, Settings.ServerPort)
                     Catch ex As System.NotSupportedException
-                        ''Unsupported version
-                        Throw New System.Exception("Unsupported version")
+                        ex.Data("ServerIP") = Settings.ServerIP
+                        ex.Data("ServerPort") = Settings.ServerPort
+                        ex.Data("protocolVersion") = protocolVersion
+                        ex.Data("UUID") = UUID
+                        ex.Data("sessionID") = sessionID
+                        Throw New Exceptions.UnsupportedVersionException("Server is not a supported Minecraft version. See InnerException's Data for details.", ex)
                     End Try
                 End If
+            ElseIf result = ProtocolHandler.LoginResult.WrongPassword Then
+                Throw New System.Security.Authentication.InvalidCredentialException("Incorrect Minecraft/Mojang account password.")
+            Else
+                Dim ex As New Exceptions.LoginFailedException("Login Failed. See Data for details.")
+                ex.Data("FailureReason") = result
+                Throw ex
             End If
-
-            Return True
-        End Function
+        End Sub
         Private Sub client_textReceived(text As String) Handles client.textReceived
             Dim args As New EventArgs.ChatReceivedEventArgs(text)
             RaiseEvent textReceived(args)
@@ -64,8 +75,11 @@ Namespace MCCWrappers
         Friend Sub Disconnect()
             client.Disconnect()
         End Sub
-        Friend Sub SendText()
-
+        Friend Sub SendText(text As String)
+            If client.getConnectionStatus = False Then
+                Throw New System.InvalidOperationException("Client is not currently connected to a server.")
+            End If
+            client.SendText(text)
         End Sub
     End Class
 End Namespace

@@ -250,6 +250,15 @@ Namespace MCCWrappers
         Public Function getOnlinePlayers() As String() Implements IMinecraftComHandler.getOnlinePlayers
             Return onlinePlayers.Values.Distinct().ToArray()
         End Function
+
+        Public Function getConnectionStatus() As Boolean
+            Try
+                Return client.Connected
+            Catch ex As Exception
+                ''Maybe variable wasn't initialised?
+                Return False
+            End Try
+        End Function
     End Class
 End Namespace
 

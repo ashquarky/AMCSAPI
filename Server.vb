@@ -23,6 +23,8 @@ Public Class Server
     Public Sub New(serverIP As String, port As UShort)
         settings.ServerIP = serverIP
         settings.ServerPort = port
+        settings.Username = Nothing
+        settings.Password = Nothing
         chat = New MCCWrapper
     End Sub
 
@@ -39,19 +41,25 @@ Public Class Server
 
     ''' <summary>
     ''' Open a chat connection to the server. Will raise chatMessageReceived event when message received.
-    ''' You must have called the constructor and authenticate first.
+    ''' You must have called the constructor and authenticate() first.
     ''' </summary>
-    ''' <returns>WIP. Sometimes returns false if connection was unsucessful.</returns>
     ''' <remarks>Uses the IP, port, username and password from earlier.</remarks>
-    Public Function startChatConnection()
-        Return chat.init(settings.Username, settings.Password, settings.ServerIP, settings.ServerPort)
-    End Function
+    Public Sub startChatConnection()
+        If settings.Username = Nothing Or settings.Password = Nothing Then
+            Throw New System.InvalidOperationException("No username or password present - did you call authenticate()?")
+        End If
+        chat.init(settings.Username, settings.Password, settings.ServerIP, settings.ServerPort)
+    End Sub
 
     ''' <summary>
     ''' Stops an active chat connection.
     ''' </summary>
     Public Sub stopChatConnection()
         chat.Disconnect()
+    End Sub
+
+    Public Sub sendChatMessage(message As String)
+        chat.SendText(message)
     End Sub
 
     ''' <summary>
