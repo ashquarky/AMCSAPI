@@ -58,6 +58,16 @@ Public Class Server
         chat.Disconnect()
     End Sub
 
+    Public Sub getServerInfo()
+        Dim ping As New PingAndStatus
+        ping.doPing(settings.ServerIP, settings.ServerPort, 0)
+    End Sub
+
+
+    ''' <summary>
+    ''' Sends a chat message to the active server. You must have a chat connection running first.
+    ''' </summary>
+    ''' <param name="message">The chat message.</param>
     Public Sub sendChatMessage(message As String)
         chat.SendText(message)
     End Sub

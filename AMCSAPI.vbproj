@@ -57,6 +57,7 @@
     <Compile Include="Exceptions\UnsupportedVersionException.vb" />
     <Compile Include="MCCWrapppers\MCCWrapper.vb" />
     <Compile Include="MCCWrapppers\McTcpClient.vb" />
+    <Compile Include="MCCWrapppers\PingAndStatus.vb" />
     <Compile Include="MiscStructures\ChatReceivedEventArgs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
