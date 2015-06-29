@@ -6,26 +6,27 @@ This computer software code ("the code") is ©2015 QuarkTheAwesome ("the author"
 
 i) Preface and TL;DR
 
-In case you aren't in the mood to interpret legalese today, I've included this section as a "wrapup" of the license's main points. In all cases, the license takes higer priority than the wrapup, so if I contradict something up here you should stick with the rules down below.
-Basically you can do whatever you want with the code or binaries as long as you don't claim ownership of my code and you don't re-upload it to another website (derivative works are excepted). You also can't use AdF.ly or similar websites in conjunction with this code, or any other way of making money from the code. Specific exemptions below.
+In case you aren't in the mood to interpret legalese today, I've included this section as a "wrapup" of the license's main points. In all cases, the license takes higer priority than the wrapup, so if I contradict something up here you should stick with the rules down below.  
+Basically you can do whatever you want with the code or binaries as long as you don't claim ownership of my code and you don't re-upload it to another website (derivative works are excepted). You also can't use AdF.ly or similar websites in conjunction with this code, or any other way of making money from the code. Specific exemptions below.  
 Also give credit and don't hold me liable for anything. That's basically the entire license - if you're confused, read on below. (However, I cannot stress enough that in a legal sense, the above few paragraphs mean nothing! All the actual licese stuff that you should stick to is below, but it's basically the same thing.)
 
 1) Scope
 
 This means that you’re free to pretty much do what you like with the the code (source) or compiled binaries (dll/zip/exe files), including but not limited to:
 
-a) Download code or compiled binaries for personal use
-b) Put the code or compiled binaries into your project/plugin etc
-c) Fork the repository on GitHub
-d) Compile the code
-e) Modify the code to:
-    - fix bugs
-    - add features
-    - fit better with your project/plugin etc
-    - remove a problematic object
-    - replace all icons with cat pictures, because cats
-f) Use portions of the code as examples in a presentation
-g) Record portions of use for display on YouTube or other video/media sites
+a) Download code or compiled binaries for personal use  
+b) Put the code or compiled binaries into your project/plugin etc  
+c) Fork the repository on GitHub  
+d) Compile the code  
+e) Modify the code to:  
+ - fix bugs  
+ - add features  
+ - fit better with your project/plugin etc  
+ - remove a problematic object  
+ - replace all icons with cat pictures, because cats  
+
+f) Use portions of the code as examples in a presentation  
+g) Record portions of use for display on YouTube or other video/media sites  
 
 The above usage is granted to you as long as this license remains intact for all original or derived code and credit is given to the original author. Please include a copy of this license with the code, or provide a link to this document, just to make sure everyone's as cool as you.
 
@@ -45,9 +46,9 @@ b) This license specifically prohibits you from using AdF.ly or AdF.ly clones (a
 
 c) Specific exceptions to the non-commercial nature of this license are granted to any derivative works of art. Here's some specific exemptions:
 
-    - If you make a cool tee-shirt design based off the code and want to sell that, it's completely ok.
-    - Want to use the the code or compiled binaries as part of a charity event? Go ahead.
-    - Make money from tutorial videos, articles or other "commentary" type uses, e.g. reviews or how-to videos? No problem.
+ - If you make a cool tee-shirt design based off the code and want to sell that, it's completely ok.
+ - Want to use the the code or compiled binaries as part of a charity event? Go ahead.
+ - Make money from tutorial videos, articles or other "commentary" type uses, e.g. reviews or how-to videos? No problem.
 
 d) Ultimately, your work is your own. This license is designed to protect against jerks trying to make money off someone else's work. Any exemptions not listed here require permission from the code author.
 
