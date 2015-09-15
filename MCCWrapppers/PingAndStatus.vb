@@ -2,6 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports System
+Imports System.Text.RegularExpressions
 
 ''' <summary>
 ''' More modded MCC code in VB. What am I supposed to do when I can't override?
@@ -57,7 +58,7 @@ Friend Class PingAndStatus
             If ComTmp.readNextVarInt() = (&H0) Then
                 Console.WriteLine("readNextVarInt2 OK")
                 Dim result As String = ComTmp.readNextString() ''This should be JSON stuff
-                Console.WriteLine(result) ''I'm allowed
+
                 Return result
             End If
         End If
@@ -141,8 +142,14 @@ Friend Class PingAndStatus
         End If
     End Function
 
-    Private Function interpretJSON(json As String)
-        Dim out As InfoStructures.ServerInformation
+    Private Function interpretJSON(json As String) ''Regex? Oh no.
+        Dim out As New InfoStructures.ServerInformation
+        Dim svrVersionName As String = Regex.Match(Regex.Match(json, """version"":\s*\{\s*""name"":"".*""\s*,\s*""protocol""").Value, ":"".*"",").Value ''I have no idea how I wrote this.
+        out.serverVersionName = svrVersionName.Substring(2, svrVersionName.Length - 4)
+        Console.WriteLine(out.serverVersionName)
 
+        out.protocolVersion = Regex.Match(json, """protocol"":.").Value.Split(":")(1) ''This one's much less complex.
+        Console.WriteLine(out.protocolVersion)
+        Return out
     End Function
 End Class

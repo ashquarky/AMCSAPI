@@ -71,7 +71,6 @@ Public Class Server
     Public Sub getServerInfo()
         Dim ping As New PingAndStatus
         Dim ret As InfoStructures.ServerInformation = ping.ping(settings.ServerIP, settings.ServerPort)
-        Throw New System.Exception
     End Sub
 
 
