@@ -13,7 +13,7 @@ Public Class Server
     ''' You must have an active chat connection running.
     ''' </summary>
     ''' <param name="args">The chat message.</param>
-    Event chatMessageReceived(args As EventArgs.ChatReceivedEventArgs)
+    Event chatMessageReceived(args As InfoStructures.ChatReceivedEventArgs)
 
     ''' <summary>
     ''' Initialise everything and stores server info for future use.
@@ -70,7 +70,8 @@ Public Class Server
 
     Public Sub getServerInfo()
         Dim ping As New PingAndStatus
-        ping.doPing(settings.ServerIP, settings.ServerPort, 0)
+        Dim ret As InfoStructures.ServerInformation = ping.ping(settings.ServerIP, settings.ServerPort)
+        Throw New System.Exception
     End Sub
 
 
@@ -87,7 +88,7 @@ Public Class Server
     ''' </summary>
     ''' <param name="args"></param>
     ''' <remarks></remarks>
-    Private Sub chat_textReceived(args As EventArgs.ChatReceivedEventArgs) Handles chat.textReceived
+    Private Sub chat_textReceived(args As InfoStructures.ChatReceivedEventArgs) Handles chat.textReceived
         RaiseEvent chatMessageReceived(args)
     End Sub
 End Class

@@ -15,7 +15,11 @@ Friend Class PingAndStatus
     End Sub
     Public Sub New()
     End Sub
+    Friend Function ping(host As String, port As UShort) As InfoStructures.ServerInformation
+        Return interpretJSON(doPing(host, port, 0))
+    End Function
     Friend Function doPing(host As String, port As UShort, ByRef protocolversion As Integer) As String
+        Console.WriteLine(host)
         Console.WriteLine("Setting up...")
         Dim tcp As New TcpClient(host, port)
         tcp.ReceiveBufferSize = 1024 * 1024
@@ -104,7 +108,7 @@ Friend Class PingAndStatus
         End While
         Return i
     End Function
-    Private Sub Receive(ByRef buffer As Byte(), start As Integer, offset As Integer, f As SocketFlags)
+    Private Sub Receive(ByRef buffer As Byte(), start As Integer, offset As Integer, f As SocketFlags, Optional hackyWorkaround As Boolean = False)
         Dim read As Integer = 0
         Console.WriteLine("[READ] reading...")
         While read < offset
@@ -114,7 +118,9 @@ Friend Class PingAndStatus
                 Console.WriteLine("[READ] noencryption")
                 read += c.Client.Receive(buffer, start + read, offset - read, f)
                 Console.WriteLine("[READ] " + read.ToString())
-                Console.WriteLine("[READ] " + System.Text.Encoding.BigEndianUnicode.GetString(buffer))
+                If hackyWorkaround Then ''Oh yes, I sunk this low to get this to work.
+                    Exit Sub
+                End If
             End If
         End While
         Console.WriteLine("[READ] done; returning")
@@ -124,14 +130,19 @@ Friend Class PingAndStatus
         Dim length As Integer = readNextVarInt()
         Console.WriteLine("[SvrIntr] gotvarint; starting mathsy stuff")
         If length > 0 Then
-            Dim cache As Byte() = New Byte(length - 1) {}
+            Dim cache As Byte() = New Byte(length) {}
             Console.WriteLine("[SvrIntr] receiving...")
-            Receive(cache, 0, length, SocketFlags.None)
+            Receive(cache, 0, length, SocketFlags.None, True)
             Console.WriteLine("[SvrIntr] all good; returning")
             Return Encoding.UTF8.GetString(cache)
         Else
             Console.WriteLine("[SvrIntr] failed")
             Return ""
         End If
+    End Function
+
+    Private Function interpretJSON(json As String)
+        Dim out As InfoStructures.ServerInformation
+
     End Function
 End Class
