@@ -1,4 +1,7 @@
 ﻿Namespace InfoStructures
+    ''' <summary>
+    ''' Contains information on a server.
+    ''' </summary>
     Public Class ServerInformation ''This SO needs a better name
         ''' <summary>
         ''' The version name returned by the server. Usually the name of the server software (Glowstone, Bukkit, Sponge etc.)
@@ -30,6 +33,10 @@
         ''' The raw description of the server, all formatting codes included.
         ''' </summary>
         Public descriptionRaw As String
+        ''' <summary>
+        ''' Raw icon data, exactly as received by the server. Good luck decoding it.
+        ''' </summary>
+        Public iconRaw As String
         Friend Sub setVersionFromProtocol()
             Select Case protocolVersion
                 Case 51 ''Why do I have methods for versions this old? Don't ask.
@@ -55,5 +62,17 @@
                 serverVersion = "Unknown"
             End If
         End Sub
+        ''' <summary>
+        ''' Decode the icon for the server. DOES NOT WORK!
+        ''' </summary>
+        ''' <returns>The icon of the server</returns>
+        Friend Function getIcon() As System.Drawing.Image ''Set to Public once working
+            If iconRaw = Nothing Then
+                Throw New System.InvalidOperationException("The icon data was not found. Make sure this class was generated from Server.getServerInfo()!")
+                Exit Function
+            End If
+            iconRaw = System.Text.RegularExpressions.Regex.Replace(iconRaw, "\\", "/") ''Minecraft fills the string with backslashes.
+            Return System.Drawing.Image.FromStream(New System.IO.MemoryStream(System.Convert.FromBase64String(iconRaw)))
+        End Function
     End Class
 End Namespace

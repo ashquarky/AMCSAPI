@@ -62,8 +62,8 @@
     <Compile Include="MCCWrapppers\MCCWrapper.vb" />
     <Compile Include="MCCWrapppers\McTcpClient.vb" />
     <Compile Include="MCCWrapppers\PingAndStatus.vb" />
-    <Compile Include="MiscStructures\ChatReceivedEventArgs.vb" />
-    <Compile Include="MiscStructures\ServerInformation.vb" />
+    <Compile Include="InfoStructures\ChatReceivedEventArgs.vb" />
+    <Compile Include="InfoStructures\ServerInformation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
