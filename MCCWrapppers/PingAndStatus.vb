@@ -21,7 +21,13 @@ Friend Class PingAndStatus
         Return interpretJSON(doPing(host, port, 0))
     End Function
     Private Function doPing(host As String, port As UShort, ByRef protocolversion As Integer) As String
-        Dim tcp As New TcpClient(host, port)
+        Dim tcp As TcpClient
+        Try
+            tcp = New TcpClient(host, port)
+        Catch ex As Exception
+            Throw New Runtime.Remoting.ServerException("Could not connect to the server.")
+            Exit Function
+        End Try
         tcp.ReceiveBufferSize = 1024 * 1024
         Dim packet_id As Byte() = getVarInt(0)
         Dim protocol_version As Byte() = getVarInt(4)
