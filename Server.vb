@@ -68,10 +68,15 @@ Public Class Server
         chat.Disconnect()
     End Sub
 
-    Public Sub getServerInfo()
-        Dim ping As New PingAndStatus
-        Dim ret As InfoStructures.ServerInformation = ping.ping(settings.ServerIP, settings.ServerPort)
-    End Sub
+    ''' <summary>
+    ''' Perform a server list ping on the active server.
+    ''' </summary>
+    ''' <returns>A ServerInformation class containing the results of the ping.</returns>
+    Public Function getServerInfo() As InfoStructures.ServerInformation
+        Using ping As New PingAndStatus
+            Return ping.ping(settings.ServerIP, settings.ServerPort)
+        End Using
+    End Function
 
 
     ''' <summary>

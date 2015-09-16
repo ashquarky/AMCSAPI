@@ -9,6 +9,7 @@ Imports System.Text.RegularExpressions
 ''' </summary>
 ''' <remarks></remarks>
 Friend Class PingAndStatus
+    Implements IDisposable
     Dim c As TcpClient
     Dim encrypted As Boolean = False
     Private Sub New(Client As TcpClient)
@@ -170,4 +171,8 @@ Friend Class PingAndStatus
         Console.WriteLine(out.onlinePlayers)
         Return out
     End Function
+
+    Friend Sub Dispose() Implements IDisposable.Dispose
+        GC.SuppressFinalize(Me)
+    End Sub
 End Class
