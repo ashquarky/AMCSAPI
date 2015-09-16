@@ -169,6 +169,9 @@ Friend Class PingAndStatus
         End Try
         Console.WriteLine(out.maxPlayers)
         Console.WriteLine(out.onlinePlayers)
+        out.descriptionRaw = Regex.Match(json, """description"":""[^""]*""").Value.Split("""")(3)
+        Console.WriteLine(out.descriptionRaw)
+        out.iconRaw = Regex.Match(json, "base64,[^""]+").Value.Split(",")(1)
         Return out
     End Function
 
