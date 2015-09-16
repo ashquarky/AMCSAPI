@@ -147,9 +147,27 @@ Friend Class PingAndStatus
         Dim svrVersionName As String = Regex.Match(Regex.Match(json, """version"":\s*\{\s*""name"":"".*""\s*,\s*""protocol""").Value, ":"".*"",").Value ''I have no idea how I wrote this.
         out.serverVersionName = svrVersionName.Substring(2, svrVersionName.Length - 4)
         Console.WriteLine(out.serverVersionName)
-
-        out.protocolVersion = Regex.Match(json, """protocol"":.").Value.Split(":")(1) ''This one's much less complex.
+        Try
+            out.protocolVersion = Regex.Match(json, """protocol"":.*},").Value.Split(":")(1).Trim().Split("}")(0)
+            out.setVersionFromProtocol()
+        Catch ex As InvalidCastException ''Some absolutely stupid servers respond with things like "-1" or "cool"
+            out.protocolVersion = Nothing
+            out.serverVersion = Nothing
+        End Try
         Console.WriteLine(out.protocolVersion)
+        Console.WriteLine(out.serverVersion)
+        Try
+            out.maxPlayers = Regex.Match(json, """players"":\s*\{\s*""max"":\s*[0-9]+,").Value.Split(":")(2).Trim().Split(",")(0)
+        Catch ex As Exception
+            out.maxPlayers = Nothing
+        End Try
+        Try
+            out.onlinePlayers = Regex.Match(json, """online"":[0-9]+").Value.Split(":")(1).Trim()
+        Catch ex As Exception
+            out.onlinePlayers = Nothing
+        End Try
+        Console.WriteLine(out.maxPlayers)
+        Console.WriteLine(out.onlinePlayers)
         Return out
     End Function
 End Class

@@ -6,20 +6,24 @@
         ''' <remarks>Will only be 1.7 or 1.8.</remarks>
         Public serverVersionName As String ''This is usally a name like "Spigot 1.8" or "CraftBukkit"
         ''' <summary>
-        ''' The actual version of the server, determined from protocolVersion. Can be innacurate on some servers.
+        ''' The actual version of the server, determined from protocolVersion. Tends to be innacurate on 1.8 Bukkit-type servers.
         ''' Where multiple versions are compatible, a range will be returned (e.g. 1.7.2-1.7.5)
+        ''' Nothing if the server didn't follow protocol, "Unknown" if we don't recognise the protocol version.
         ''' </summary>
-        Public serverVersion As String
+        Public serverVersion As String = "loading"
         ''' <summary>
         ''' The protocol version returned from the server.
+        ''' Nothing if the server didn't follow protocol.
         ''' </summary>
         Public protocolVersion As Integer
         ''' <summary>
         ''' The number of online players as returned by the server.
+        ''' Nothing if the server didn't follow protocol.
         ''' </summary>
         Public onlinePlayers As Integer
         ''' <summary>
         ''' The maximum number of players as returned by the server.
+        ''' Nothing if the sevrer didn't follow protocol.
         ''' </summary>
         Public maxPlayers As Integer
         ''' <summary>
@@ -38,13 +42,18 @@
                     serverVersion = "1.6.0"
                 Case 73
                     serverVersion = "1.6.1-1.6.4"
-                Case 4
+                Case 4 ''For some weird reason, most new server softwares for 1.8 still respond with this protocol number
                     serverVersion = "1.7.2-1.7.5"
                 Case 5
                     serverVersion = "1.7.6-1.7.10"
                 Case 47
                     serverVersion = "1.8.0-1.8.8"
+                Case Nothing
+                    serverVersion = Nothing
             End Select
+            If serverVersion = "loading" Then
+                serverVersion = "Unknown"
+            End If
         End Sub
     End Class
 End Namespace
