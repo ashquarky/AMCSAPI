@@ -1,4 +1,5 @@
 ﻿Imports AMCSAPI.MCCWrappers
+Imports System.Reflection
 
 ''' <summary>
 ''' Main class. Used to represent a server. Everything you do with AMCSAPI starts here.
@@ -12,7 +13,7 @@ Public Class Server
     ''' You must have an active chat connection running.
     ''' </summary>
     ''' <param name="args">The chat message.</param>
-    Event chatMessageReceived(args As EventArgs.ChatReceivedEventArgs)
+    Event chatMessageReceived(args As InfoStructures.ChatReceivedEventArgs)
 
     ''' <summary>
     ''' Initialise everything and stores server info for future use.
@@ -21,6 +22,15 @@ Public Class Server
     ''' <param name="port">Port number of server.</param>
     ''' <remarks>For now, version is inferred.</remarks>
     Public Sub New(serverIP As String, port As UShort)
+        AddHandler System.AppDomain.CurrentDomain.AssemblyResolve,
+    Function(sender As Object, args As System.ResolveEventArgs) As System.Reflection.Assembly
+        Dim ressourceName = "AMCSAPI." + New AssemblyName(args.Name).Name + ".dll"
+        Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ressourceName)
+            Dim assemblyData(CInt(stream.Length)) As Byte
+            stream.Read(assemblyData, 0, assemblyData.Length)
+            Return Assembly.Load(assemblyData)
+        End Using
+    End Function
         settings.ServerIP = serverIP
         settings.ServerPort = port
         settings.Username = Nothing
@@ -58,6 +68,21 @@ Public Class Server
         chat.Disconnect()
     End Sub
 
+    ''' <summary>
+    ''' Perform a server list ping on the active server.
+    ''' </summary>
+    ''' <returns>A ServerInformation class containing the results of the ping.</returns>
+    Public Function getServerInfo() As InfoStructures.ServerInformation
+        Using ping As New PingAndStatus
+            Return ping.ping(settings.ServerIP, settings.ServerPort)
+        End Using
+    End Function
+
+
+    ''' <summary>
+    ''' Sends a chat message to the active server. You must have a chat connection running first.
+    ''' </summary>
+    ''' <param name="message">The chat message.</param>
     Public Sub sendChatMessage(message As String)
         chat.SendText(message)
     End Sub
@@ -67,7 +92,7 @@ Public Class Server
     ''' </summary>
     ''' <param name="args"></param>
     ''' <remarks></remarks>
-    Private Sub chat_textReceived(args As EventArgs.ChatReceivedEventArgs) Handles chat.textReceived
+    Private Sub chat_textReceived(args As InfoStructures.ChatReceivedEventArgs) Handles chat.textReceived
         RaiseEvent chatMessageReceived(args)
     End Sub
 End Class

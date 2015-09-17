@@ -17,7 +17,7 @@ Namespace MCCWrappers
         Dim WithEvents client As McTcpClient
         Dim Settings As New Settings_template
 
-        Event textReceived(args As EventArgs.ChatReceivedEventArgs)
+        Event textReceived(args As InfoStructures.ChatReceivedEventArgs)
 
         Friend Sub init(username As String, password As String, ip As String, port As UShort)
             Dim result As ProtocolHandler.LoginResult
@@ -39,6 +39,7 @@ Namespace MCCWrappers
             If result = ProtocolHandler.LoginResult.Success Then
                 ''Success!
                 Dim protocolVersion As Integer
+
                 ''TODO: in the original class, this was only if set to Auto version detect.
                 If ProtocolHandler.GetServerInfo(Settings.ServerIP, Settings.ServerPort, protocolVersion) = False Then
                     ''Failed to ping IP...
@@ -69,7 +70,7 @@ Namespace MCCWrappers
             End If
         End Sub
         Private Sub client_textReceived(text As String) Handles client.textReceived
-            Dim args As New EventArgs.ChatReceivedEventArgs(text)
+            Dim args As New InfoStructures.ChatReceivedEventArgs(text)
             RaiseEvent textReceived(args)
         End Sub
         Friend Sub Disconnect()

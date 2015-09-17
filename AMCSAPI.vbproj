@@ -46,18 +46,25 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MinecraftClient">
       <HintPath>.\MinecraftClient.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\LoginFailedException.vb" />
     <Compile Include="Exceptions\UnsupportedVersionException.vb" />
     <Compile Include="MCCWrapppers\MCCWrapper.vb" />
     <Compile Include="MCCWrapppers\McTcpClient.vb" />
-    <Compile Include="MiscStructures\ChatReceivedEventArgs.vb" />
+    <Compile Include="MCCWrapppers\PingAndStatus.vb" />
+    <Compile Include="InfoStructures\ChatReceivedEventArgs.vb" />
+    <Compile Include="InfoStructures\ServerInformation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -94,7 +101,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MinecraftClient.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

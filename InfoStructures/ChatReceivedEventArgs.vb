@@ -1,6 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 
-Namespace EventArgs
+Namespace InfoStructures
+    ''' <summary>
+    ''' Contains information on the chat message that was just received.
+    ''' </summary>
     Public Class ChatReceivedEventArgs
         ''' <summary>
         ''' The raw chat message - colour codes, white space and all.
