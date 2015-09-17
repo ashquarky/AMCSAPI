@@ -22,20 +22,20 @@ Public Class Server
     ''' <param name="port">Port number of server.</param>
     ''' <remarks>For now, version is inferred.</remarks>
     Public Sub New(serverIP As String, port As UShort)
+        AddHandler System.AppDomain.CurrentDomain.AssemblyResolve,
+    Function(sender As Object, args As System.ResolveEventArgs) As System.Reflection.Assembly
+        Dim ressourceName = "AMCSAPI." + New AssemblyName(args.Name).Name + ".dll"
+        Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ressourceName)
+            Dim assemblyData(CInt(stream.Length)) As Byte
+            stream.Read(assemblyData, 0, assemblyData.Length)
+            Return Assembly.Load(assemblyData)
+        End Using
+    End Function
         settings.ServerIP = serverIP
         settings.ServerPort = port
         settings.Username = Nothing
         settings.Password = Nothing
         chat = New MCCWrapper
-        AddHandler System.AppDomain.CurrentDomain.AssemblyResolve,
-         Function(sender As Object, args As System.ResolveEventArgs) As System.Reflection.Assembly
-             Dim ressourceName = "MinecraftClient." + New AssemblyName(args.Name).Name + ".dll"
-             Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ressourceName)
-                 Dim assemblyData(CInt(stream.Length)) As Byte
-                 stream.Read(assemblyData, 0, assemblyData.Length)
-                 Return Assembly.Load(assemblyData)
-             End Using
-         End Function
     End Sub
 
     ''' <summary>
